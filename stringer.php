@@ -1,4 +1,10 @@
 <?php
+	$preprogrammed_functions = array(
+		'write' => 'echo',
+		'php' => 'this',
+		'back' => 'return',
+		'read' => 'phpin',
+	);
     $variables = array();
     $functions = array();
     $stack = array();
@@ -28,8 +34,23 @@
 		$header = trim(spacesFree($lines[0]));
 		if ($header == null) continue;
 		$header = explode(' ', $header);
-		
+		if (isset($preprogrammed_functions[$header[0]])) {
+			crash('Trying to redeclarate standart function '.$header[0].', crashing...');
+		}
+		if (isset($functions[$header[0]])) {
+			crash('Trying to redeclarate function '.$header[0].', crashing...');
+		}
+ 		for ($i = 1; $i < count($header); $i++) {
+			$functions[$header[0]][0][] = $header[$i];
+		}
+		for ($i = 1; $i < count($lines); $i++) {
+			$line = trim($lines[$i]);
+			if ($line != null)
+				$functions[$header[0]][1][] = $line;
+		}
 	};
+	
+	print_r($functions);
 		
 	function contains($search, $that) {
 		return str_replace($that,null,$search) != $search;
