@@ -46,7 +46,7 @@
 		for ($i = 1; $i < count($lines); $i++) {
 			$line = trim($lines[$i]);
 			if ($line != null)
-				$functions[$header[0]][1][] = $line;
+				$functions[$header[0]][1][] = spacesFree($line);
 		}
 	};
 	
